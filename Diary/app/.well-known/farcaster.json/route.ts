@@ -1,6 +1,7 @@
 // تعریف تایپ برای ساختار app
 interface App {
   url: string;
+  webhook?: string;
 }
 
 // تعریف تایپ برای کل Manifest
@@ -10,7 +11,7 @@ interface FarcasterManifest {
   description: string;
   icon: string;
   app: App;
-  [key: string]: undefined | string | string[] | App; // برای پشتیبانی از پراپرتی‌های اضافی
+  [key: string]: undefined | string | string[] | App;
 }
 
 function withValidProperties(properties: FarcasterManifest) {
@@ -20,7 +21,6 @@ function withValidProperties(properties: FarcasterManifest) {
         return value.length > 0;
       }
       if (typeof value === "object" && value !== null) {
-        // برای شیء‌هایی مثل app
         return Object.keys(value).length > 0;
       }
       return !!value;
@@ -29,7 +29,8 @@ function withValidProperties(properties: FarcasterManifest) {
 }
 
 export async function GET() {
-  const URL = process.env.NEXT_PUBLIC_URL;
+  const URL =
+    process.env.NEXT_PUBLIC_URL || "https://diary-xi-mocha.vercel.app";
 
   return Response.json(
     withValidProperties({
@@ -40,7 +41,8 @@ export async function GET() {
         "A miniapp to mint your memories as NFTs on Base",
       icon: process.env.NEXT_PUBLIC_APP_ICON || `${URL}/icon.png`,
       app: {
-        url: URL || "https://diary-xi-mocha.vercel.app",
+        url: URL,
+        webhook: `${URL}/api/webhook`,
       },
     }),
   );
