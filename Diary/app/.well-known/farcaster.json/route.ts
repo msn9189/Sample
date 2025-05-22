@@ -35,14 +35,12 @@ export async function GET() {
   return Response.json(
     withValidProperties({
       version: "v1",
-      name: process.env.NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME || "Diary MiniApp",
-      description:
-        process.env.NEXT_PUBLIC_APP_DESCRIPTION ||
-        "A miniapp to mint your memories as NFTs on Base",
-      icon: process.env.NEXT_PUBLIC_APP_ICON || `${URL}/icon.png`,
+      name: "Diary MiniApp",
+      description: "A miniapp to mint your memories as NFTs on Base",
+      icon: "https://diary-xi-mocha.vercel.app/icon.png",
       app: {
-        url: URL,
-        webhook: `${URL}/api/webhook`,
+        url: "https://diary-xi-mocha.vercel.app",
+        webhook: "https://diary-xi-mocha.vercel.app/api/webhook",
       },
     }),
   );
